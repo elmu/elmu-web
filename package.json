@@ -36,7 +36,7 @@
     "aurelia-dependency-injection": "~1.4.2",
     "auto-bind": "~1.2.1",
     "aws-sdk": "~2.310.0",
-    "bcrypt": "~3.0.6",
+    "bcrypt": "~5.0.0",
     "body-parser": "~1.19.0",
     "classnames": "~2.2.6",
     "clipboard-copy": "~3.1.0",
