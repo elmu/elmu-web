@@ -1,8 +1,8 @@
-import Docs from '../components/pages/docs.js';
-import Users from '../components/pages/users.js';
-import EditDoc from '../components/pages/edit-doc.js';
-import Settings from '../components/pages/settings.js';
-import { hydrateApp } from '../bootstrap/client-bootstrapper.js';
+import Docs from '@educandu/educandu/components/pages/docs.js';
+import Users from '@educandu/educandu/components/pages/users.js';
+import EditDoc from '@educandu/educandu/components/pages/edit-doc.js';
+import Settings from '@educandu/educandu/components/pages/settings.js';
+import { hydrateApp } from '@educandu/educandu/bootstrap/client-bootstrapper.js';
 
 hydrateApp({
   'docs': Docs,

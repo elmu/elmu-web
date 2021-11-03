@@ -1,10 +1,7 @@
 /* eslint-disable no-console, no-process-env, require-atomic-updates */
-import url from 'url';
 import del from 'del';
-import path from 'path';
 import gulp from 'gulp';
 import glob from 'glob';
-import yaml from 'yaml';
 import { EOL } from 'os';
 import execa from 'execa';
 import fse from 'fs-extra';
@@ -16,7 +13,6 @@ import eslint from 'gulp-eslint';
 import { promisify } from 'util';
 import plumber from 'gulp-plumber';
 import EasyTable from 'easy-table';
-import superagent from 'superagent';
 import { promises as fs } from 'fs';
 import Graceful from 'node-graceful';
 import { spawn } from 'child_process';
@@ -30,16 +26,14 @@ if (process.env.ELMU_ENV === 'prod') {
   throw new Error('Tasks should not run in production environment!');
 }
 
-const ROOT_DIR = path.dirname(url.fileURLToPath(import.meta.url));
-
 const TEST_MAILDEV_IMAGE = 'maildev/maildev:1.1.0';
-const TEST_MAILDEV_CONTAINER_NAME = 'elmu-maildev';
+const TEST_MAILDEV_CONTAINER_NAME = 'maildev';
 
 const TEST_MONGO_IMAGE = 'bitnami/mongodb:4.2.17-debian-10-r23';
-const TEST_MONGO_CONTAINER_NAME = 'elmu-mongo';
+const TEST_MONGO_CONTAINER_NAME = 'mongo';
 
 const TEST_MINIO_IMAGE = 'bitnami/minio:2020.12.18';
-const TEST_MINIO_CONTAINER_NAME = 'elmu-minio';
+const TEST_MINIO_CONTAINER_NAME = 'minio';
 
 const MINIO_ACCESS_KEY = 'UVDXF41PYEAX0PXD8826';
 const MINIO_SECRET_KEY = 'SXtajmM3uahrQ1ALECh3Z3iKT76s2s5GBJlbQMZx';
@@ -49,11 +43,8 @@ const FAVICON_DATA_FILE = 'favicon-data.json';
 const optimize = (process.argv[2] || '').startsWith('ci') || process.argv.includes('--optimize');
 const verbose = (process.argv[2] || '').startsWith('ci') || process.argv.includes('--verbose');
 
-const autoprefixOptions = {
-  browsers: ['last 2 versions']
-};
-
-const supportedLanguages = ['en', 'de'];
+const bundleTargets = ['esnext', 'chrome95', 'firefox93', 'safari15', 'edge95'];
+const autoprefixOptions = { browsers: ['last 2 versions'] };
 
 let server = null;
 let buildResult = null;
@@ -63,49 +54,32 @@ Graceful.on('exit', () => {
   buildResult?.rebuild?.dispose();
 });
 
-const delay = ms => new Promise(resolve => {
-  setTimeout(resolve, ms);
-});
+const runDockerCommand = async (command, waitMs = 0) => {
+  const result = await new Docker({ echo: false }).command(command);
+  await new Promise(resolve => {
+    setTimeout(resolve, waitMs);
+  });
+  return result;
+};
 
-const kebabToCamel = str => str.replace(/-[a-z0-9]/g, c => c.toUpperCase()).replace(/-/g, '');
-
-const ensureContainerRunning = async ({ containerName, runArgs, afterRun = () => Promise.resolve() }) => {
-  const docker = new Docker();
-  const data = await docker.command('ps -a');
+const ensureContainerRunning = async ({ containerName, runArgs }) => {
+  const data = await runDockerCommand('ps -a');
   const container = data.containerList.find(c => c.names === containerName);
   if (!container) {
-    await docker.command(`run --name ${containerName} ${runArgs}`);
-    await delay(1000);
-    await afterRun();
+    await runDockerCommand(`run --name ${containerName} ${runArgs}`, 1000);
   } else if (!container.status.startsWith('Up')) {
-    await docker.command(`restart ${containerName}`);
-    await delay(1000);
+    await runDockerCommand(`restart ${containerName}`, 1000);
   }
 };
 
 const ensureContainerRemoved = async ({ containerName }) => {
-  const docker = new Docker();
   try {
-    await docker.command(`rm -f ${containerName}`);
-    await delay(1000);
+    await runDockerCommand(`rm -f ${containerName}`, 1000);
   } catch (err) {
     if (!err.toString().includes('No such container')) {
       throw err;
     }
   }
-};
-
-function runJest(...flags) {
-  return execa(process.execPath, [
-    '--experimental-vm-modules',
-    `${ROOT_DIR}/node_modules/jest/bin/jest.js`,
-    ...flags.map(flag => `--${flag}`)
-  ], { stdio: 'inherit' });
-}
-
-const downloadCountryList = async lang => {
-  const res = await superagent.get(`https://raw.githubusercontent.com/umpirsky/country-list/master/data/${lang}/country.json`);
-  await fs.writeFile(`./src/data/country-names/${lang}.json`, JSON.stringify(JSON.parse(res.text), null, 2), 'utf8');
 };
 
 export async function clean() {
@@ -127,20 +101,8 @@ export function fix() {
     .pipe(eslint.failAfterError());
 }
 
-export function test() {
-  return runJest('coverage', 'runInBand');
-}
-
-export function testChanged() {
-  return runJest('onlyChanged');
-}
-
-export function testWatch() {
-  return runJest('watch');
-}
-
 export function bundleCss() {
-  return gulp.src('src/styles/main.less')
+  return gulp.src('src/main.less')
     .pipe(gulpif(!!server, plumber()))
     .pipe(sourcemaps.init())
     .pipe(less({ javascriptEnabled: true, plugins: [new LessAutoprefix(autoprefixOptions)] }))
@@ -155,7 +117,7 @@ export async function bundleJs() {
   } else {
     buildResult = await esbuild.build({
       entryPoints: await promisify(glob)('./src/bundles/*.js'),
-      target: ['esnext', 'chrome95', 'firefox93', 'safari15', 'edge95'],
+      target: bundleTargets,
       format: 'esm',
       bundle: true,
       splitting: true,
@@ -171,7 +133,9 @@ export async function bundleJs() {
   }
 
   if (buildResult.metafile) {
+    const metatext = await esbuild.analyzeMetafile(buildResult.metafile, { verbose: false });
     await fse.ensureDir('./reports');
+    await fs.writeFile('./reports/bundles.txt', metatext, 'utf8');
     await fs.writeFile('./reports/bundles.json', JSON.stringify(buildResult.metafile, null, 2), 'utf8');
 
     const t = new EasyTable();
@@ -186,45 +150,6 @@ export async function bundleJs() {
 
     console.log(EOL + t.toString());
   }
-}
-
-export async function bundleTranslations() {
-  const filePaths = await promisify(glob)('./src/**/*.yml');
-
-  const bundleGroups = await Promise.all(filePaths.map(async filePath => {
-    const namespace = kebabToCamel(path.basename(filePath, '.yml'));
-    const content = await fs.readFile(filePath, 'utf8');
-    const resources = yaml.parse(content);
-
-    if (!resources) {
-      return [];
-    }
-
-    const bundlesByLanguage = {};
-    const resourceKeys = Object.keys(resources);
-
-    resourceKeys.forEach(resourceKey => {
-      const languages = Object.keys(resources[resourceKey]);
-      languages.forEach(language => {
-        let languageBundle = bundlesByLanguage[language];
-        if (!languageBundle) {
-          languageBundle = {
-            namespace,
-            language,
-            resources: {}
-          };
-          bundlesByLanguage[language] = languageBundle;
-        }
-        languageBundle.resources[resourceKey] = resources[resourceKey][language];
-      });
-    });
-
-    return Object.values(bundlesByLanguage);
-  }));
-
-  const result = bundleGroups.flatMap(x => x);
-
-  await fs.writeFile('./src/resources/resources.json', JSON.stringify(result, null, 2), 'utf8');
 }
 
 export function faviconGenerate(done) {
@@ -310,11 +235,7 @@ export async function faviconCheckUpdate(done) {
   realFavicon.checkForUpdates(currentVersion, done);
 }
 
-export const build = gulp.parallel(bundleCss, bundleTranslations, bundleJs);
-
-export async function countriesUpdate() {
-  await Promise.all(supportedLanguages.map(downloadCountryList));
-}
+export const build = gulp.parallel(bundleCss, bundleJs);
 
 export async function maildevUp() {
   await ensureContainerRunning({
@@ -347,16 +268,12 @@ export async function mongoUp() {
       '-p 27017:27017',
       '-e MONGODB_ROOT_USER=root',
       '-e MONGODB_ROOT_PASSWORD=rootpw',
-      '-e MONGODB_REPLICA_SET_KEY=elmurs',
-      '-e MONGODB_REPLICA_SET_NAME=elmurs',
+      '-e MONGODB_REPLICA_SET_KEY=educandurs',
+      '-e MONGODB_REPLICA_SET_NAME=educandurs',
       '-e MONGODB_REPLICA_SET_MODE=primary',
       '-e MONGODB_ADVERTISED_HOSTNAME=localhost',
       TEST_MONGO_IMAGE
-    ].join(' '),
-    afterRun: async () => {
-      await mongoUser();
-      await mongoSeed();
-    }
+    ].join(' ')
   });
 }
 
@@ -378,10 +295,7 @@ export async function minioUp() {
       `-e MINIO_SECRET_KEY=${MINIO_SECRET_KEY}`,
       '-e MINIO_BROWSER=on',
       TEST_MINIO_IMAGE
-    ].join(' '),
-    afterRun: async () => {
-      await execa('./scripts/s3-seed', { stdio: 'inherit' });
-    }
+    ].join(' ')
   });
 }
 
@@ -446,16 +360,11 @@ export const down = gulp.parallel(mongoDown, minioDown, maildevDown);
 
 export const serve = gulp.series(gulp.parallel(up, build), startServer);
 
-export const ciPrepare = gulp.series(mongoUser, gulp.parallel(mongoSeed, minioSeed));
-
-export const ci = gulp.series(clean, lint, test, build);
+export const ci = gulp.series(clean, lint, build);
 
 export function setupWatchers(done) {
   gulp.watch(['src/**/*.{js,json}'], gulp.series(bundleJs, restartServer));
-  gulp.watch(['src/**/*.yml'], gulp.series(bundleTranslations, restartServer));
   gulp.watch(['src/**/*.less'], bundleCss);
-  gulp.watch(['scripts/db-seed.js'], mongoSeed);
-  gulp.watch(['scripts/s3-seed.js'], minioSeed);
   done();
 }
 
