@@ -40,8 +40,6 @@ jobs:
           cache: "yarn"
       - name: Install node modules
         run: yarn install --non-interactive --check-files --frozen-lockfile
-      - name: Prepare
-        run: ./node_modules/.bin/gulp ciPrepare
       - name: Lint
         run: ./node_modules/.bin/gulp lint
       - name: Test
@@ -60,7 +58,7 @@ jobs:
       - name: Install node modules
         run: yarn install --non-interactive --check-files --frozen-lockfile
       - name: Build library
-        run: ./node_modules/.bin/gulp educanduBuild
+        run: ./node_modules/.bin/gulp build
       - name: Authenticate with npm
         run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
       - name: npm version
@@ -87,7 +85,7 @@ jobs:
       - name: Install node modules
         run: yarn install --non-interactive --check-files --frozen-lockfile
       - name: Build library
-        run: ./node_modules/.bin/gulp educanduBuild
+        run: ./node_modules/.bin/gulp build
       - name: Authenticate with npm
         run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
       - name: npm version
