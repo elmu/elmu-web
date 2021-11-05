@@ -62,11 +62,12 @@ const runDockerCommand = async (command, waitMs = 0) => {
   return result;
 };
 
-const ensureContainerRunning = async ({ containerName, runArgs }) => {
+const ensureContainerRunning = async ({ containerName, runArgs, afterRun = () => Promise.resolve() }) => {
   const data = await runDockerCommand('ps -a');
   const container = data.containerList.find(c => c.names === containerName);
   if (!container) {
     await runDockerCommand(`run --name ${containerName} ${runArgs}`, 1000);
+    await afterRun();
   } else if (!container.status.startsWith('Up')) {
     await runDockerCommand(`restart ${containerName}`, 1000);
   }
