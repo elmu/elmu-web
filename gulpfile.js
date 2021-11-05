@@ -3,7 +3,6 @@ import del from 'del';
 import gulp from 'gulp';
 import glob from 'glob';
 import { EOL } from 'os';
-import execa from 'execa';
 import fse from 'fs-extra';
 import less from 'gulp-less';
 import csso from 'gulp-csso';
@@ -20,6 +19,7 @@ import { Docker } from 'docker-cli-js';
 import prettyBytes from 'pretty-bytes';
 import sourcemaps from 'gulp-sourcemaps';
 import realFavicon from 'gulp-real-favicon';
+import { Client as MinioClient } from 'minio';
 import LessAutoprefix from 'less-plugin-autoprefix';
 
 if (process.env.ELMU_ENV === 'prod') {
@@ -229,6 +229,41 @@ export function faviconGenerate(done) {
   });
 }
 
+async function ensureBucketExists() {
+  const region = 'eu-central-1';
+  const bucketName = 'dev-educandu-cdn';
+
+  const minioClient = new MinioClient({
+    endPoint: 'localhost',
+    port: 9000,
+    useSSL: false,
+    region,
+    accessKey: MINIO_ACCESS_KEY,
+    secretKey: MINIO_SECRET_KEY
+  });
+
+  const bucketPolicy = {
+    Version: '2012-10-17',
+    Statement: [
+      {
+        Sid: 'PublicReadGetObject',
+        Effect: 'Allow',
+        Principal: '*',
+        Action: 's3:GetObject',
+        Resource: `arn:aws:s3:::${bucketName}/*`
+      }
+    ]
+  };
+
+  const buckets = await minioClient.listBuckets();
+  console.log('BUCKETS', buckets);
+
+  if (!buckets.find(x => x.name === bucketName)) {
+    await minioClient.makeBucket(bucketName, region);
+    await minioClient.setBucketPolicy(bucketName, JSON.stringify(bucketPolicy));
+  }
+}
+
 export async function faviconCheckUpdate(done) {
   const faviconData = await fs.readFile(FAVICON_DATA_FILE, 'utf8');
   const currentVersion = JSON.parse(faviconData).version;
@@ -251,14 +286,6 @@ export async function maildevDown() {
 }
 
 export const maildevReset = gulp.series(maildevDown, maildevUp);
-
-export async function mongoUser() {
-  await execa('./scripts/db-create-user', { stdio: 'inherit' });
-}
-
-export async function mongoSeed() {
-  await execa('./scripts/db-seed', { stdio: 'inherit' });
-}
 
 export async function mongoUp() {
   await ensureContainerRunning({
@@ -295,7 +322,8 @@ export async function minioUp() {
       `-e MINIO_SECRET_KEY=${MINIO_SECRET_KEY}`,
       '-e MINIO_BROWSER=on',
       TEST_MINIO_IMAGE
-    ].join(' ')
+    ].join(' '),
+    afterRun: ensureBucketExists
   });
 }
 
@@ -306,10 +334,6 @@ export async function minioDown() {
 }
 
 export const minioReset = gulp.series(minioDown, minioUp);
-
-export async function minioSeed() {
-  await execa('./scripts/s3-seed', { stdio: 'inherit' });
-}
 
 function spawnServer({ skipDbChecks }) {
   server = spawn(
