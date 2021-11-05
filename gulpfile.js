@@ -48,6 +48,7 @@ const autoprefixOptions = { browsers: ['last 2 versions'] };
 
 let server = null;
 let buildResult = null;
+const containerCommandTimeoutMs = 2000;
 
 Graceful.on('exit', () => {
   server?.kill();
@@ -66,16 +67,16 @@ const ensureContainerRunning = async ({ containerName, runArgs, afterRun = () =>
   const data = await runDockerCommand('ps -a');
   const container = data.containerList.find(c => c.names === containerName);
   if (!container) {
-    await runDockerCommand(`run --name ${containerName} ${runArgs}`, 1000);
+    await runDockerCommand(`run --name ${containerName} ${runArgs}`, containerCommandTimeoutMs);
     await afterRun();
   } else if (!container.status.startsWith('Up')) {
-    await runDockerCommand(`restart ${containerName}`, 1000);
+    await runDockerCommand(`restart ${containerName}`, containerCommandTimeoutMs);
   }
 };
 
 const ensureContainerRemoved = async ({ containerName }) => {
   try {
-    await runDockerCommand(`rm -f ${containerName}`, 1000);
+    await runDockerCommand(`rm -f ${containerName}`, containerCommandTimeoutMs);
   } catch (err) {
     if (!err.toString().includes('No such container')) {
       throw err;
@@ -230,7 +231,7 @@ export function faviconGenerate(done) {
   });
 }
 
-async function ensureBucketExists() {
+export async function ensureBucketExists() {
   const region = 'eu-central-1';
   const bucketName = 'dev-educandu-cdn';
 
