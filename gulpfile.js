@@ -256,7 +256,6 @@ async function ensureBucketExists() {
   };
 
   const buckets = await minioClient.listBuckets();
-  console.log('BUCKETS', buckets);
 
   if (!buckets.find(x => x.name === bucketName)) {
     await minioClient.makeBucket(bucketName, region);
