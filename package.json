@@ -21,7 +21,7 @@
   },
   "private": true,
   "dependencies": {
-    "@educandu/educandu": "0.0.0-pre.bde334aa24b116190fc77286b9a4989ff367f62b",
+    "@educandu/educandu": "~0.0.0-pre.b3ab4c70dbdbf517eb44376409c79cf0cb811cae",
     "@educandu/node-jsx-loader": "~2.1.0",
     "parseboolean": "~1.0.0"
   },
@@ -33,7 +33,6 @@
     "eslint-plugin-import": "~2.25.2",
     "eslint-plugin-react": "~7.26.1",
     "eslint-plugin-react-hooks": "~4.2.0",
-    "execa": "~5.1.1",
     "fs-extra": "~10.0.0",
     "glob": "~7.2.0",
     "gulp": "~4.0.2",
@@ -45,6 +44,7 @@
     "gulp-real-favicon": "~0.3.2",
     "gulp-sourcemaps": "~3.0.0",
     "less-plugin-autoprefix": "~2.0.0",
+    "minio": "~7.0.19",
     "node-graceful": "~3.1.0",
     "pretty-bytes": "~5.6.0"
   }
