@@ -69,10 +69,10 @@
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
 
-"@educandu/educandu@~0.0.0-pre.4d87824f279215ff5fac7debd5d7c8aeb2610d79":
-  version "0.0.0-pre.4d87824f279215ff5fac7debd5d7c8aeb2610d79"
-  resolved "https://registry.yarnpkg.com/@educandu/educandu/-/educandu-0.0.0-pre.4d87824f279215ff5fac7debd5d7c8aeb2610d79.tgz#397113275be4fa98b29796f52472c10de0cf7350"
-  integrity sha512-saq9KwKQYbII0woA7wlTIe4wpGltwKDHJ+WfbD4DMtBHkQ+0T19gYyBS4HTKoZA00G4iHcBQxTdLqY3zUmQDLA==
+"@educandu/educandu@~0.0.0-pre.03a44df72fe9efbfe53efd8a4368fb493afa0546":
+  version "0.0.0-pre.03a44df72fe9efbfe53efd8a4368fb493afa0546"
+  resolved "https://registry.yarnpkg.com/@educandu/educandu/-/educandu-0.0.0-pre.03a44df72fe9efbfe53efd8a4368fb493afa0546.tgz#a4943b00c80ba561bc4ea6cf55838fe361a3e367"
+  integrity sha512-IzMQ8ijGkCSe34VDyC3QzQ+QHblaq1mLbNKUF9rBuePAK5j+07GLcQwz6rJzYPsfEuMU6+hrPli7HK1nCLcBEw==
   dependencies:
     "@ant-design/icons" "~4.7.0"
     "@educandu/node-jsx-loader" "~2.1.0"
@@ -98,6 +98,7 @@
     del "~6.0.0"
     dropperx "~1.0.1"
     esbuild "~0.13.9"
+    escape-string-regexp "~5.0.0"
     express "~4.17.1"
     express-async-errors "~3.1.1"
     express-joi-validation "~5.0.0"
@@ -2496,6 +2497,11 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+
+escape-string-regexp@~5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-5.0.0.tgz#4683126b500b61762f2dbebace1806e8be31b1c8"
+  integrity sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==
 
 eslint-import-resolver-node@^0.3.6:
   version "0.3.6"
