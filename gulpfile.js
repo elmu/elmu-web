@@ -350,7 +350,7 @@ function spawnServer({ skipDbChecks }) {
       env: {
         ...process.env,
         NODE_ENV: 'development',
-        ELMU_SKIP_DB_MIGRATIONS: true.toString(),
+        ELMU_SKIP_DB_MIGRATIONS: (!!skipDbChecks).toString(),
         ELMU_SKIP_DB_CHECKS: (!!skipDbChecks).toString()
       },
       stdio: 'inherit'
