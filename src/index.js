@@ -43,6 +43,7 @@ if (env === 'dev') {
     password: 'test',
     email: 'test@test.com'
   };
+  config.exposeErrorDetails = true;
 } else {
   config.mongoConnectionString = precessEnv.ELMU_WEB_CONNECTION_STRING;
   config.cdnEndpoint = precessEnv.ELMU_CDN_ENDPOINT;
@@ -54,6 +55,7 @@ if (env === 'dev') {
   config.sessionSecret = precessEnv.ELMU_SESSION_SECRET;
   config.smtpOptions = JSON.parse(precessEnv.ELMU_SMTP_OPTIONS);
   config.initialUser = null;
+  config.exposeErrorDetails = false;
 }
 
 educandu(config);
