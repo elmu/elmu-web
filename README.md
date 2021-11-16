@@ -1,6 +1,6 @@
 # elmu-web
 
-The elmu website
+The ELMU website
 
 ## Local development:
 
