@@ -21,8 +21,9 @@
   },
   "private": true,
   "dependencies": {
-    "@educandu/educandu": "0.0.0-pre.d19e840fb818945dc4c9993d0420c2878f5f1fc0",
+    "@educandu/educandu": "0.0.0-pre.3af9c2904cc368af075153626109780ee76edcc6",
     "@educandu/node-jsx-loader": "~2.1.0",
+    "mongodb": "4.1.4",
     "parseboolean": "~1.0.0"
   },
   "devDependencies": {
