@@ -16,7 +16,6 @@ const env = processEnv.ELMU_ENV || 'dev';
 logger.info('Environment is set to %s', env);
 
 const config = {
-  env,
   port: Number(processEnv.ELMU_PORT) || 3000,
   publicFolders: ['../dist', '../static'].map(x => path.resolve(thisDir, x)),
   sessionDurationInMinutes: Number(processEnv.ELMU_SESSION_DURATION_IN_MINUTES) || 60,
