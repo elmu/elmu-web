@@ -23,7 +23,6 @@
   "dependencies": {
     "@educandu/educandu": "0.0.0-pre.3af9c2904cc368af075153626109780ee76edcc6",
     "@educandu/node-jsx-loader": "~2.1.0",
-    "mongodb": "4.1.4",
     "parseboolean": "~1.0.0"
   },
   "devDependencies": {
