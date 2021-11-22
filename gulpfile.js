@@ -46,6 +46,21 @@ const verbose = (process.argv[2] || '').startsWith('ci') || process.argv.include
 const bundleTargets = ['esnext', 'chrome95', 'firefox93', 'safari15', 'edge95'];
 const autoprefixOptions = { browsers: ['last 2 versions'] };
 
+const localEnv = {
+  ELMU_WEB_CONNECTION_STRING: 'mongodb://root:rootpw@localhost:27017/dev-educandu-db?replicaSet=educandurs&authSource=admin',
+  ELMU_CDN_ENDPOINT: 'http://localhost:9000',
+  ELMU_CDN_REGION: 'eu-central-1',
+  ELMU_CDN_ACCESS_KEY: 'UVDXF41PYEAX0PXD8826',
+  ELMU_CDN_SECRET_KEY: 'SXtajmM3uahrQ1ALECh3Z3iKT76s2s5GBJlbQMZx',
+  ELMU_CDN_BUCKET_NAME: 'dev-educandu-cdn',
+  ELMU_CDN_ROOT_URL: 'http://localhost:9000/dev-educandu-cdn',
+  ELMU_SESSION_SECRET: 'd4340515fa834498b3ab1aba1e4d9013',
+  ELMU_EMAIL_SENDER_ADDRESS: 'educandu-test-app@test.com',
+  ELMU_SMTP_OPTIONS: 'smtp://localhost:8025/?ignoreTLS=true',
+  ELMU_INITIAL_USER: JSON.stringify({ username: 'test', password: 'test', email: 'test@test.com' }),
+  ELMU_EXPOSE_ERROR_DETAILS: true.toString()
+};
+
 let server = null;
 let buildResult = null;
 const containerCommandTimeoutMs = 2000;
@@ -348,8 +363,9 @@ function spawnServer({ skipDbChecks }) {
     ],
     {
       env: {
-        ...process.env,
         NODE_ENV: 'development',
+        ...localEnv,
+        ...process.env,
         ELMU_SKIP_DB_MIGRATIONS: (!!skipDbChecks).toString(),
         ELMU_SKIP_DB_CHECKS: (!!skipDbChecks).toString()
       },
