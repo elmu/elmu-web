@@ -7,21 +7,21 @@ import Logger from '@educandu/educandu/common/logger.js';
 const logger = new Logger(import.meta.url);
 
 // eslint-disable-next-line no-process-env
-const precessEnv = process.env;
+const processEnv = process.env;
 
 const thisDir = path.dirname(url.fileURLToPath(import.meta.url));
 
-const env = precessEnv.ELMU_ENV || 'dev';
+const env = processEnv.ELMU_ENV || 'dev';
 
 logger.info('Environment is set to %s', env);
 
 const config = {
   env,
-  port: Number(precessEnv.ELMU_PORT) || 3000,
+  port: Number(processEnv.ELMU_PORT) || 3000,
   publicFolders: ['../dist', '../static'].map(x => path.resolve(thisDir, x)),
-  sessionDurationInMinutes: Number(precessEnv.ELMU_SESSION_DURATION_IN_MINUTES) || 60,
-  skipMongoMigrations: parseBool(precessEnv.ELMU_SKIP_DB_MIGRATIONS || false.toString()),
-  skipMongoChecks: parseBool(precessEnv.ELMU_SKIP_DB_CHECKS || false.toString())
+  sessionDurationInMinutes: Number(processEnv.ELMU_SESSION_DURATION_IN_MINUTES) || 60,
+  skipMongoMigrations: parseBool(processEnv.ELMU_SKIP_DB_MIGRATIONS || false.toString()),
+  skipMongoChecks: parseBool(processEnv.ELMU_SKIP_DB_CHECKS || false.toString())
 };
 
 if (env === 'dev') {
@@ -42,18 +42,19 @@ if (env === 'dev') {
   };
   config.exposeErrorDetails = true;
 } else {
-  config.mongoConnectionString = precessEnv.ELMU_WEB_CONNECTION_STRING;
-  config.cdnEndpoint = precessEnv.ELMU_CDN_ENDPOINT;
-  config.cdnRegion = precessEnv.ELMU_CDN_REGION;
-  config.cdnAccessKey = precessEnv.ELMU_CDN_ACCESS_KEY;
-  config.cdnSecretKey = precessEnv.ELMU_CDN_SECRET_KEY;
-  config.cdnBucketName = precessEnv.ELMU_CDN_BUCKET_NAME;
-  config.cdnRootUrl = precessEnv.ELMU_CDN_ROOT_URL;
-  config.sessionSecret = precessEnv.ELMU_SESSION_SECRET;
+  config.mongoConnectionString = processEnv.ELMU_WEB_CONNECTION_STRING;
+  config.cdnEndpoint = processEnv.ELMU_CDN_ENDPOINT;
+  config.cdnRegion = processEnv.ELMU_CDN_REGION;
+  config.cdnAccessKey = processEnv.ELMU_CDN_ACCESS_KEY;
+  config.cdnSecretKey = processEnv.ELMU_CDN_SECRET_KEY;
+  config.cdnBucketName = processEnv.ELMU_CDN_BUCKET_NAME;
+  config.cdnRootUrl = processEnv.ELMU_CDN_ROOT_URL;
+  config.sessionSecret = processEnv.ELMU_SESSION_SECRET;
   config.emailSenderAddress = 'website@elmu.online';
-  config.smtpOptions = JSON.parse(precessEnv.ELMU_SMTP_OPTIONS);
+  config.smtpOptions = JSON.parse(processEnv.ELMU_SMTP_OPTIONS);
   config.initialUser = null;
-  config.exposeErrorDetails = false;
+  config.exportApiKey = processEnv.ELMU_EXPORT_API_KEY;
+  config.importSources = JSON.parse(processEnv.ELMU_IMPORT_SOURCES || '[]');
 }
 
 educandu(config);
