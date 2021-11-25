@@ -29,7 +29,8 @@ const config = {
   initialUser: processEnv.ELMU_INITIAL_USER ? JSON.parse(processEnv.ELMU_INITIAL_USER) : null,
   exportApiKey: processEnv.ELMU_EXPORT_API_KEY,
   importSources: JSON.parse(processEnv.ELMU_IMPORT_SOURCES || '[]'),
-  exposeErrorDetails: parseBool(processEnv.ELMU_EXPOSE_ERROR_DETAILS || false.toString())
+  exposeErrorDetails: parseBool(processEnv.ELMU_EXPOSE_ERROR_DETAILS || false.toString()),
+  disabledFeatures: JSON.parse(processEnv.ELMU_DISABLED_FEATURES || '[]')
 };
 
 educandu(config);
