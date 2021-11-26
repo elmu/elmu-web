@@ -66,8 +66,15 @@ let buildResult = null;
 const containerCommandTimeoutMs = 2000;
 
 Graceful.on('exit', () => {
-  server?.kill();
   buildResult?.rebuild?.dispose();
+  return new Promise(resolve => {
+    if (server) {
+      server.once('exit', () => resolve());
+      server.kill();
+    } else {
+      resolve();
+    }
+  });
 });
 
 const runDockerCommand = async (command, waitMs = 0) => {
@@ -369,7 +376,8 @@ function spawnServer({ skipDbChecks }) {
         ELMU_SKIP_DB_MIGRATIONS: (!!skipDbChecks).toString(),
         ELMU_SKIP_DB_CHECKS: (!!skipDbChecks).toString()
       },
-      stdio: 'inherit'
+      stdio: 'inherit',
+      detached: true
     }
   );
   server.once('exit', () => {
