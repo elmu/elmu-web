@@ -1,4 +1,4 @@
-FROM node:16.11.0-alpine3.12
+FROM node:16.13.1-alpine3.12
 
 ENV NODE_ENV "production"
 
@@ -7,9 +7,9 @@ WORKDIR /app
 COPY package.json yarn.lock /app/
 
 RUN apk --no-cache add curl \
-    && apk --no-cache --virtual build-dependencies add git \
-    && yarn install --non-interactive --frozen-lockfile --check-files --production=true \
-    && apk del build-dependencies
+  && apk --no-cache --virtual build-dependencies add git \
+  && yarn install --non-interactive --frozen-lockfile --check-files --production=true \
+  && apk del build-dependencies
 
 COPY . /app/
 
