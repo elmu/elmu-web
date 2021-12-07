@@ -32,7 +32,12 @@ const config = {
   exportApiKey: processEnv.ELMU_EXPORT_API_KEY,
   importSources: JSON.parse(processEnv.ELMU_IMPORT_SOURCES || '[]'),
   exposeErrorDetails: parseBool(processEnv.ELMU_EXPOSE_ERROR_DETAILS || false.toString()),
-  disabledFeatures: JSON.parse(processEnv.ELMU_DISABLED_FEATURES || '[]')
+  disabledFeatures: JSON.parse(processEnv.ELMU_DISABLED_FEATURES || '[]'),
+  taskProcessing: {
+    isEnabled: true,
+    idlePollIntervalInMs: 10000,
+    maxAttempts: 3
+  }
 };
 
 educandu(config);
