@@ -68,7 +68,6 @@ Graceful.on('exit', () => {
   return new Promise(resolve => {
     if (server) {
       server.once('exit', () => resolve());
-      server.kill();
     } else {
       resolve();
     }
@@ -374,8 +373,7 @@ function spawnServer({ skipDbChecks }) {
         ELMU_SKIP_DB_MIGRATIONS: (!!skipDbChecks).toString(),
         ELMU_SKIP_DB_CHECKS: (!!skipDbChecks).toString()
       },
-      stdio: 'inherit',
-      detached: true
+      stdio: 'inherit'
     }
   );
   server.once('exit', () => {
