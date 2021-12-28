@@ -27,6 +27,7 @@ const config = {
   cdnBucketName: processEnv.ELMU_CDN_BUCKET_NAME,
   cdnRootUrl: processEnv.ELMU_CDN_ROOT_URL,
   sessionSecret: processEnv.ELMU_SESSION_SECRET,
+  sessionCookieDomain: processEnv.ELMU_SESSION_COOKIE_DOMAIN,
   emailSenderAddress: 'website@elmu.online',
   smtpOptions: smtpOptions.startsWith('smtp://') ? smtpOptions : JSON.parse(smtpOptions),
   initialUser: processEnv.ELMU_INITIAL_USER ? JSON.parse(processEnv.ELMU_INITIAL_USER) : null,
