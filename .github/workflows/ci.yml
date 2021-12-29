@@ -33,7 +33,7 @@ jobs:
     env:
       DOCKER_IMAGE: elmu/elmu-web
       OCTO_PROJECT_NAME: elmu-web
-      OCTO_ENVIRONMENT_NAME: Staging
+      OCTO_ENVIRONMENT_NAME: Integration
       OCTO_SERVER: https://elmu.octopus.app
     steps:
       - uses: actions/checkout@v2
