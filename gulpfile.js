@@ -59,9 +59,11 @@ const localEnv = {
   ELMU_EXPOSE_ERROR_DETAILS: true.toString()
 };
 
+const isMac = () => process.platform === 'darwin';
+
 let server = null;
 let buildResult = null;
-const containerCommandTimeoutMs = 2000;
+const containerCommandTimeoutMs = isMac() ? 2500 : 1000;
 
 Graceful.on('exit', () => {
   buildResult?.rebuild?.dispose();
