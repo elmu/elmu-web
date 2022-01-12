@@ -53,10 +53,20 @@ const localEnv = {
   ELMU_CDN_BUCKET_NAME: 'dev-educandu-cdn',
   ELMU_CDN_ROOT_URL: 'http://localhost:9000/dev-educandu-cdn',
   ELMU_SESSION_SECRET: 'd4340515fa834498b3ab1aba1e4d9013',
+  ELMU_SESSION_COOKIE_DOMAIN: 'localhost',
+  ELMU_SESSION_COOKIE_NAME: 'SESSION_ID_ELMU_LOCAL',
   ELMU_EMAIL_SENDER_ADDRESS: 'educandu-test-app@test.com',
   ELMU_SMTP_OPTIONS: 'smtp://localhost:8025/?ignoreTLS=true',
   ELMU_INITIAL_USER: JSON.stringify({ username: 'test', password: 'test', email: 'test@test.com' }),
-  ELMU_EXPOSE_ERROR_DETAILS: true.toString()
+  ELMU_EXPOSE_ERROR_DETAILS: true.toString(),
+  ELMU_IMPORT_SOURCES: JSON.stringify([
+    {
+      name: 'Open Music Academy - integration',
+      hostName: 'integration.openmusic.academy',
+      apiKey: '9e88fd8288ed4738813aaf764df005c4'
+    }
+  ]),
+  ELMU_SKIP_MAINTENANCE: false.toString()
 };
 
 const isMac = () => process.platform === 'darwin';
