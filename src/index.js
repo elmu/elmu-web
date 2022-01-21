@@ -2,6 +2,7 @@ import url from 'url';
 import path from 'path';
 import parseBool from 'parseboolean';
 import educandu from '@educandu/educandu';
+import faviconData from '../favicon-data.json';
 import bundleConfig from './bundles/bundle-config.js';
 import ArticlesController from './articles-controller.js';
 
@@ -13,9 +14,11 @@ const smtpOptions = processEnv.ELMU_SMTP_OPTIONS;
 const thisDir = path.dirname(url.fileURLToPath(import.meta.url));
 
 const config = {
+  appName: 'ELMU',
   bundleConfig,
   port: Number(processEnv.ELMU_PORT) || 3000,
   publicFolders: ['../dist', '../static'].map(x => path.resolve(thisDir, x)),
+  resources: ['./src/resource-overrides.json'].map(x => path.resolve(x)),
   sessionDurationInMinutes: Number(processEnv.ELMU_SESSION_DURATION_IN_MINUTES) || 60,
   skipMaintenance: parseBool(processEnv.ELMU_SKIP_MAINTENANCE || false.toString()),
   mongoConnectionString: processEnv.ELMU_WEB_CONNECTION_STRING,
@@ -40,7 +43,8 @@ const config = {
     idlePollIntervalInMs: 10000,
     maxAttempts: 3
   },
-  additionalControllers: [ArticlesController]
+  additionalControllers: [ArticlesController],
+  additionalHeadHtml: faviconData.favicon.html_code
 };
 
 educandu(config);

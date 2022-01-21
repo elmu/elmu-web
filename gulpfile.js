@@ -56,7 +56,7 @@ const localEnv = {
   ELMU_SESSION_COOKIE_DOMAIN: 'localhost',
   ELMU_SESSION_COOKIE_NAME: 'SESSION_ID_ELMU_LOCAL',
   ELMU_EMAIL_SENDER_ADDRESS: 'educandu-test-app@test.com',
-  ELMU_SMTP_OPTIONS: 'smtp://localhost:8025/?ignoreTLS=true',
+  ELMU_SMTP_OPTIONS: 'smtp://127.0.0.1:8025/?ignoreTLS=true',
   ELMU_INITIAL_USER: JSON.stringify({ username: 'test', password: 'test', email: 'test@test.com' }),
   ELMU_EXPOSE_ERROR_DETAILS: true.toString(),
   ELMU_IMPORT_SOURCES: JSON.stringify([
