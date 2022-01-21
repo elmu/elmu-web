@@ -2,6 +2,7 @@ import url from 'url';
 import path from 'path';
 import parseBool from 'parseboolean';
 import educandu from '@educandu/educandu';
+import faviconData from '../favicon-data.json';
 import bundleConfig from './bundles/bundle-config.js';
 import ArticlesController from './articles-controller.js';
 
@@ -42,7 +43,8 @@ const config = {
     idlePollIntervalInMs: 10000,
     maxAttempts: 3
   },
-  additionalControllers: [ArticlesController]
+  additionalControllers: [ArticlesController],
+  additionalHeadHtml: faviconData.favicon.html_code
 };
 
 educandu(config);
