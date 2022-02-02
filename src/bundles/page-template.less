@@ -34,6 +34,7 @@
 .PageTemplate-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   min-height: @page-template-header-min-height;
 }
 
@@ -42,21 +43,12 @@
   padding: @edu-content-padding;
 
   &.PageTemplate-headerContent--left {
-    flex: 1 0 0%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
   }
 
-  &.PageTemplate-headerContent--center {
-    flex: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   &.PageTemplate-headerContent--right {
-    flex: 1 0 0%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
