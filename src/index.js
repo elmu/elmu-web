@@ -44,7 +44,8 @@ const config = {
     maxAttempts: 3
   },
   additionalControllers: [ArticlesController],
-  additionalHeadHtml: faviconData.favicon.html_code
+  additionalHeadHtml: faviconData.favicon.html_code,
+  areRoomsEnabled: parseBool(processEnv.ELMU_ARE_ROOMS_ENABLED || false.toString())
 };
 
 educandu(config);

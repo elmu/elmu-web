@@ -6,16 +6,23 @@ The ELMU website
 
 ### Linting commands
 
-~~~
+~~~sh
 gulp lint // Will run eslint
 gulp fix  // Will run eslint and fix any linting rules that are easily solvable.
           // ATTENTION: commit your work before running this command.
 ~~~
 
-### Running locally
+### Tunnelling
 
-~~~
-gulp // Will start up mongodb, minio and maildev containers and run the project
+~~~sh
+// Make sure to set correct values for these env variables:
+
+export TUNNEL_TOKEN='43nv9zj935tmzmx4'
+export TUNNEL_WEBSITE_DOMAIN='mytunneldomain.com'
+export TUNNEL_WEBSITE_CDN_DOMAIN='cdn.mytunneldomain.com'
+
+// Start the tunnel:
+gulp tunnel
 ~~~
 
 ## License
