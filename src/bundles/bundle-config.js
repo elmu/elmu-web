@@ -5,6 +5,9 @@ export default {
   getPageTemplateComponent() {
     return PageTemplate;
   },
+  getHomePageLogoComponent() {
+    return SiteLogo;
+  },
   getSiteLogoComponent() {
     return SiteLogo;
   }
