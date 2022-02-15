@@ -6,7 +6,7 @@ export default {
     return PageTemplate;
   },
   getHomePageLogoComponent() {
-    return SiteLogo;
+    return null;
   },
   getSiteLogoComponent() {
     return SiteLogo;
