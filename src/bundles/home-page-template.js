@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import SiteLogo from './site-logo.js';
 import React, { useState } from 'react';
 import PageHeader from './page-header.js';
 import PageFooter from './page-footer.js';
+import Markdown from '@educandu/educandu/components/markdown.js';
+import { useSettings } from '@educandu/educandu/components/settings-context.js';
 import UiLanguageDialog from '@educandu/educandu/components/ui-language-dialog.js';
 import CookieConsentDrawer from '@educandu/educandu/components/cookie-consent-drawer.js';
 
-function PageTemplate({ children, alerts, fullScreen }) {
+function HomePageTemplate({ children, alerts }) {
+  const settings = useSettings();
   const [isUiLanguageDialogVisible, setIsUiLanguageDialogVisible] = useState(false);
 
   const handleUiLanguageDialogClose = () => {
@@ -17,21 +20,20 @@ function PageTemplate({ children, alerts, fullScreen }) {
     setIsUiLanguageDialogVisible(true);
   };
 
-  const contentAreaClasses = classNames({
-    'PageTemplate-contentArea': true,
-    'PageTemplate-contentArea--fullScreen': fullScreen
-  });
-  const contentClasses = classNames({
-    'PageTemplate-content': true,
-    'PageTemplate-content--fullScreen': fullScreen
-  });
-
   return (
     <div className="PageTemplate">
-      <PageHeader fullScreen={fullScreen} alerts={alerts} onUiLanguageClick={handleUiLanguageClick} />
-      <main className={contentAreaClasses}>
-        <div className={contentClasses}>
+      <PageHeader fullScreen alerts={alerts} onUiLanguageClick={handleUiLanguageClick} />
+      <main className="PageTemplate-contentArea PageTemplate-contentArea--fullScreen">
+        <div className="PageTemplate-content PageTemplate-content--fullScreen PageTemplate-content--aboveCenter">
+          <div className="HomePageTemplate-logo" >
+            <SiteLogo readonly />
+          </div>
           {children}
+          {settings.homepageInfo && (
+            <div className="HomePageTemplate-info">
+              <Markdown renderMedia>{settings.homepageInfo}</Markdown>
+            </div>
+          )}
         </div>
       </main>
       <PageFooter />
@@ -41,19 +43,17 @@ function PageTemplate({ children, alerts, fullScreen }) {
   );
 }
 
-PageTemplate.propTypes = {
+HomePageTemplate.propTypes = {
   alerts: PropTypes.arrayOf(PropTypes.shape({
     message: PropTypes.node.isRequired,
     type: PropTypes.oneOf(['success', 'info', 'warning', 'error'])
   })),
-  children: PropTypes.node,
-  fullScreen: PropTypes.bool
+  children: PropTypes.node
 };
 
-PageTemplate.defaultProps = {
+HomePageTemplate.defaultProps = {
   alerts: [],
-  children: null,
-  fullScreen: false
+  children: null
 };
 
-export default PageTemplate;
+export default HomePageTemplate;
