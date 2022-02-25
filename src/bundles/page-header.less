@@ -1,0 +1,51 @@
+@page-header-content-min-height: 32px;
+@page-header-min-height: @page-header-content-min-height + (2* @edu-content-padding);
+
+.PageHeader {
+  top: 0;
+  flex: none;
+  width: 100%;
+  position: sticky;
+  z-index: @edu-z-index-cover-layer;
+  background-color: @grey-1;
+  box-shadow: 0 2px 8px @grey-4;
+  margin-bottom: @edu-content-padding;
+
+  &.PageHeader--fullScreen {
+    box-shadow: none;
+  }
+}
+
+.PageHeader-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: @page-header-min-height;
+}
+
+.PageHeader-headerContent {
+  display: block;
+  padding: @edu-content-padding;
+
+  &.PageHeader-headerContent--left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &.PageHeader-headerContent--right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+.PageHeader-headerButton {
+  .m-icon-button;
+  .m-grouped-button;
+}
+
+.PageHeader-loginButton {
+  cursor: pointer;
+  margin-right: (2.5 * @edu-button-spacing);
+}
