@@ -1,5 +1,5 @@
 @page-header-content-min-height: 32px;
-@page-header-min-height: @page-header-content-min-height + (2* @edu-content-padding);
+@page-header-min-height: @page-header-content-min-height + (2* @edu-page-content-padding);
 
 .PageHeader {
   top: 0;
@@ -9,7 +9,7 @@
   z-index: @edu-z-index-cover-layer;
   background-color: @grey-1;
   box-shadow: 0 2px 8px @grey-4;
-  margin-bottom: @edu-content-padding;
+  margin-bottom: @edu-page-content-padding;
 
   &.PageHeader--fullScreen {
     box-shadow: none;
@@ -25,7 +25,8 @@
 
 .PageHeader-headerContent {
   display: block;
-  padding: @edu-content-padding;
+  .m-page-content;
+
 
   &.PageHeader-headerContent--left {
     display: flex;
