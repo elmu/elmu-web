@@ -19,8 +19,29 @@
 @edu-border-radius-base: 2px;
 
 // Color
-@edu-primary-color: @blue-7;
+@edu-primary-color-light: @blue-7;
+@edu-primary-color-dark: @blue-8;
+@edu-secondary-color-light: @blue-7;
+@edu-secondary-color-dark: @blue-8;
+@edu-text-color: fade(@black, 85%);
+@edu-text-color-secondary: fade(@black, 45%);
+@edu-disabled-color: #E6E6E6;
+@edu-background-color-base: #F0F0F0;
+@edu-background-color-light: #FAFAFA;
+@edu-content-title-color: @edu-text-color;
+@edu-border-color-base: #BCBCBC;
+@edu-border-color-light: #E8E8E8;
+@edu-success-color: @green-6;
+@edu-processing-color: @blue-6;
+@edu-error-color: @red-5;
+@edu-highlight-color: @red-5;
+@edu-warning-color: @gold-6;
 @edu-link-color: @blue-7;
 @edu-link-active-color: lighten(@edu-link-color, 15%);
 @edu-link-hover-color: lighten(@edu-link-color, 15%);
+@edu-tabs-ink-bar-color: @edu-primary-color-light;
+@edu-tabs-highlight-color: @edu-primary-color-light;
 
+.NewsTab-activityDataLink {
+  color: @edu-link-color;
+}
