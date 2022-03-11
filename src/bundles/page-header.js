@@ -45,9 +45,9 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       showWhen: true
     },
     {
-      key: 'my-space',
-      href: urls.getMySpaceUrl(),
-      text: t('pageNames:mySpace'),
+      key: 'dashboard',
+      href: urls.getDashboardUrl(),
+      text: t('pageNames:dashboard'),
       icon: IdcardOutlined,
       permission: null,
       showWhen: !!user
@@ -110,24 +110,6 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
     }
   ].filter(item => item.showWhen);
 
-  const renderAlert = (alert, index) => {
-    const shouldRenderAlert = !fullScreen || alert.showInFullScreen;
-    if (!shouldRenderAlert) {
-      return null;
-    }
-
-    return (
-      <Alert
-        key={index}
-        message={alert.message}
-        type={alert.type || 'info'}
-        banner
-        closable={alert.closable || false}
-        onClose={alert.onClose || (() => { })}
-        />
-    );
-  };
-
   const pageHeaderAreaClasses = classNames({
     'PageHeader': true,
     'PageHeader--fullScreen': fullScreen
@@ -148,7 +130,16 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
           </LinkPopover>
         </div>
       </div>
-      {alerts && alerts.map(renderAlert)}
+      {!fullScreen && alerts && alerts.map((alert, index) => (
+        <Alert
+          key={index.toString()}
+          message={alert.message}
+          type="info"
+          banner
+          closable={alert.closable || false}
+          onClose={alert.onClose || (() => { })}
+          />
+      ))}
     </header>
   );
 }
@@ -156,7 +147,8 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
 PageHeader.propTypes = {
   alerts: PropTypes.arrayOf(PropTypes.shape({
     message: PropTypes.node.isRequired,
-    type: PropTypes.oneOf(['success', 'info', 'warning', 'error'])
+    closable: PropTypes.bool,
+    onClose: PropTypes.func
   })),
   fullScreen: PropTypes.bool,
   onUiLanguageClick: PropTypes.func
