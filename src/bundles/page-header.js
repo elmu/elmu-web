@@ -5,6 +5,7 @@ import { Alert, Button } from 'antd';
 import SiteLogo from './site-logo.js';
 import { useTranslation } from 'react-i18next';
 import urls from '@educandu/educandu/utils/urls.js';
+import { QuestionOutlined } from '@ant-design/icons';
 import Login from '@educandu/educandu/components/login.js';
 import permissions from '@educandu/educandu/domain/permissions.js';
 import { useUser } from '@educandu/educandu/components/user-context.js';
@@ -14,18 +15,15 @@ import { FEATURE_TOGGLES } from '@educandu/educandu/domain/constants.js';
 import { useLocale } from '@educandu/educandu/components/locale-context.js';
 import { useService } from '@educandu/educandu/components/container-context.js';
 import { useSettings } from '@educandu/educandu/components/settings-context.js';
-import {
-  QuestionOutlined,
-  MenuOutlined,
-  LogoutOutlined,
-  HomeOutlined,
-  IdcardOutlined,
-  FileOutlined,
-  UserOutlined,
-  SettingOutlined,
-  ImportOutlined,
-  GlobalOutlined
-} from '@ant-design/icons';
+import HomeIcon from '@educandu/educandu/components/icons/main-menu/home-icon.js';
+import MenuIcon from '@educandu/educandu/components/icons/main-menu/menu-icon.js';
+import UsersIcon from '@educandu/educandu/components/icons/main-menu/users-icon.js';
+import LogoffIcon from '@educandu/educandu/components/icons/main-menu/logoff-icon.js';
+import ImportsIcon from '@educandu/educandu/components/icons/main-menu/imports-icon.js';
+import LanguageIcon from '@educandu/educandu/components/icons/main-menu/language-icon.js';
+import SettingsIcon from '@educandu/educandu/components/icons/main-menu/settings-icon.js';
+import DocumentsIcon from '@educandu/educandu/components/icons/main-menu/documents-icon.js';
+import DashboardIcon from '@educandu/educandu/components/icons/main-menu/dashboard-icon.js';
 
 function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
   const user = useUser();
@@ -40,7 +38,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       key: 'home',
       href: urls.getHomeUrl(),
       text: t('pageNames:home'),
-      icon: HomeOutlined,
+      icon: HomeIcon,
       permission: null,
       showWhen: true
     },
@@ -48,7 +46,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       key: 'dashboard',
       href: urls.getDashboardUrl(),
       text: t('pageNames:dashboard'),
-      icon: IdcardOutlined,
+      icon: DashboardIcon,
       permission: null,
       showWhen: !!user
     },
@@ -56,7 +54,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       key: 'docs',
       href: urls.getDocsUrl(),
       text: t('pageNames:docs'),
-      icon: FileOutlined,
+      icon: DocumentsIcon,
       permission: permissions.VIEW_DOCS,
       showWhen: true
     },
@@ -64,7 +62,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       key: 'users',
       href: urls.getUsersUrl(),
       text: t('pageNames:users'),
-      icon: UserOutlined,
+      icon: UsersIcon,
       permission: permissions.EDIT_USERS,
       showWhen: true
     },
@@ -72,7 +70,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       key: 'settings',
       href: urls.getSettingsUrl(),
       text: t('pageNames:settings'),
-      icon: SettingOutlined,
+      icon: SettingsIcon,
       permission: permissions.EDIT_SETTINGS,
       showWhen: true
     },
@@ -80,7 +78,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       key: 'import',
       href: urls.getImportsUrl(),
       text: t('pageNames:importBatches'),
-      icon: ImportOutlined,
+      icon: ImportsIcon,
       permission: permissions.MANAGE_IMPORT,
       showWhen: !clientConfig.disabledFeatures.includes(FEATURE_TOGGLES.import)
     },
@@ -93,10 +91,10 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       showWhen: !!helpPage
     },
     {
-      key: 'language',
+      key: 'ui-language',
       onClick: () => onUiLanguageClick(),
       text: t('common:language'),
-      icon: GlobalOutlined,
+      icon: LanguageIcon,
       permission: null,
       showWhen: true
     },
@@ -104,7 +102,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       key: 'logout',
       href: urls.getLogoutUrl(),
       text: t('common:logoff'),
-      icon: LogoutOutlined,
+      icon: LogoffIcon,
       permission: null,
       showWhen: !!user
     }
@@ -126,7 +124,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
             <Login />
           </div>
           <LinkPopover items={pageMenuItems} trigger="click" placement="bottomRight">
-            <Button className="PageHeader-headerButton" icon={<MenuOutlined />} />
+            <Button className="PageHeader-headerButton" icon={<MenuIcon />} type="link" />
           </LinkPopover>
         </div>
       </div>
