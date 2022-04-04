@@ -67,11 +67,11 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       showWhen: true
     },
     {
-      key: 'settings',
-      href: urls.getSettingsUrl(),
-      text: t('pageNames:settings'),
+      key: 'admin',
+      href: urls.getAdminUrl(),
+      text: t('pageNames:admin'),
       icon: SettingsIcon,
-      permission: permissions.EDIT_SETTINGS,
+      permission: permissions.ADMIN,
       showWhen: true
     },
     {
