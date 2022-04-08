@@ -31,6 +31,7 @@ const config = {
   sessionSecret: processEnv.ELMU_SESSION_SECRET,
   sessionCookieDomain: processEnv.ELMU_SESSION_COOKIE_DOMAIN,
   sessionCookieName: processEnv.ELMU_SESSION_COOKIE_NAME,
+  consentCookieNamePrefix: processEnv.ELMU_CONSENT_COOKIE_NAME_PREFIX,
   emailSenderAddress: 'website@elmu.online',
   smtpOptions: smtpOptions.startsWith('smtp://') ? smtpOptions : JSON.parse(smtpOptions),
   initialUser: processEnv.ELMU_INITIAL_USER ? JSON.parse(processEnv.ELMU_INITIAL_USER) : null,
