@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import PageHeader from './page-header.js';
 import PageFooter from './page-footer.js';
+import ConsentDrawer from '@educandu/educandu/components/consent-drawer.js';
 import UiLanguageDialog from '@educandu/educandu/components/ui-language-dialog.js';
-import CookieConsentDrawer from '@educandu/educandu/components/cookie-consent-drawer.js';
 
 function PageTemplate({ children, alerts, fullScreen }) {
   const [isUiLanguageDialogVisible, setIsUiLanguageDialogVisible] = useState(false);
@@ -36,7 +36,7 @@ function PageTemplate({ children, alerts, fullScreen }) {
       </main>
       <PageFooter />
       <UiLanguageDialog visible={isUiLanguageDialogVisible} onClose={handleUiLanguageDialogClose} />
-      <CookieConsentDrawer />
+      <ConsentDrawer />
     </div>
   );
 }
