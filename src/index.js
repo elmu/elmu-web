@@ -13,6 +13,27 @@ const smtpOptions = processEnv.ELMU_SMTP_OPTIONS;
 
 const thisDir = path.dirname(url.fileURLToPath(import.meta.url));
 
+const disabledPlugins = (processEnv.ELMU_DISABLED_PLUGINS || '').split(',').map(x => x.trim()).filter(x => !!x);
+
+const enabledPlugins = [
+  'markdown',
+  'quick-tester',
+  'audio',
+  'video',
+  'image',
+  'pdf-viewer',
+  'iframe',
+  'anavis',
+  'image-tiles',
+  'diagram-net',
+  'annotation',
+  'abc-notation',
+  'ear-training',
+  'interval-trainer',
+  'interactive-media',
+  'table'
+].filter(x => !disabledPlugins.includes(x));
+
 const config = {
   appName: 'ELMU',
   bundleConfig,
@@ -46,7 +67,8 @@ const config = {
   },
   additionalControllers: [ArticlesController],
   additionalHeadHtml: faviconData.favicon.html_code,
-  areRoomsEnabled: parseBool(processEnv.ELMU_ARE_ROOMS_ENABLED || false.toString())
+  areRoomsEnabled: parseBool(processEnv.ELMU_ARE_ROOMS_ENABLED || false.toString()),
+  plugins: enabledPlugins
 };
 
 educandu(config);
