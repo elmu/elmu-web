@@ -53,6 +53,7 @@ const config = {
   sessionCookieDomain: processEnv.ELMU_SESSION_COOKIE_DOMAIN,
   sessionCookieName: processEnv.ELMU_SESSION_COOKIE_NAME,
   consentCookieNamePrefix: processEnv.ELMU_CONSENT_COOKIE_NAME_PREFIX,
+  uploadLiabilityCookieName: processEnv.ELMU_UPLOAD_LIABILITY_COOKIE_NAME,
   emailSenderAddress: 'website@elmu.online',
   smtpOptions: smtpOptions.startsWith('smtp://') ? smtpOptions : JSON.parse(smtpOptions),
   initialUser: processEnv.ELMU_INITIAL_USER ? JSON.parse(processEnv.ELMU_INITIAL_USER) : null,
