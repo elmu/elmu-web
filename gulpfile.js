@@ -40,7 +40,8 @@ const elmuEnv = {
   ELMU_EXPOSE_ERROR_DETAILS: true.toString(),
   ELMU_ARE_ROOMS_ENABLED: false.toString(),
   ELMU_IMPORT_SOURCES: JSON.stringify([{ name: 'Open Music Academy - integration', hostName: 'integration.openmusic.academy', apiKey: '9e88fd8288ed4738813aaf764df005c4' }]),
-  ELMU_SKIP_MAINTENANCE: false.toString()
+  ELMU_SKIP_MAINTENANCE: false.toString(),
+  ELMU_DISABLED_PLUGINS: 'interactive-media,table'
 };
 
 const mongoContainer = new MongoContainer({
