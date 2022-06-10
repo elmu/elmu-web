@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import urls from '@educandu/educandu/utils/urls.js';
+import routes from '@educandu/educandu/utils/routes.js';
 
 function SiteLogo({ readonly, size }) {
   const linkClasses = classNames({
@@ -9,7 +9,7 @@ function SiteLogo({ readonly, size }) {
     'SiteLogo-link--readonly': readonly
   });
 
-  const homeUrl = readonly ? null : urls.getHomeUrl();
+  const homeUrl = readonly ? null : routes.getHomeUrl();
 
   return (
     <div className="SiteLogo">
