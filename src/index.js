@@ -69,7 +69,8 @@ const config = {
   additionalControllers: [ArticlesController],
   additionalHeadHtml: faviconData.favicon.html_code,
   areRoomsEnabled: parseBool(processEnv.ELMU_ARE_ROOMS_ENABLED || false.toString()),
-  plugins: enabledPlugins
+  plugins: enabledPlugins,
+  basicAuthUsers: JSON.parse(processEnv.ELMU_BASIC_AUTH_USERS || '{}')
 };
 
 educandu(config);
