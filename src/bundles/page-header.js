@@ -129,10 +129,10 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       </div>
       {!fullScreen && alerts && alerts.map((alert, index) => (
         <Alert
-          key={index.toString()}
-          message={alert.message}
-          type="info"
           banner
+          key={index.toString()}
+          type={alert.type}
+          message={alert.message}
           closable={alert.closable || false}
           onClose={alert.onClose || (() => { })}
           />
