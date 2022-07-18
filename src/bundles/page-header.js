@@ -79,7 +79,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       key: 'help',
       label: helpPage?.linkTitle,
       icon: <QuestionOutlined />,
-      onClick: () => { window.location = helpPage ? routes.getDocUrl({ key: helpPage.documentKey }) : ''; },
+      onClick: () => { window.location = helpPage ? routes.getDocUrl({ id: helpPage.documentId }) : ''; },
       showWhen: !!helpPage
     },
     {
