@@ -19,7 +19,7 @@ class ArticlesController {
         throw new NotFound(`Article '${slug}' could  not be found`);
       }
 
-      res.redirect(301, routes.getDocUrl({ key: doc.key, slug: doc.slug }));
+      res.redirect(301, routes.getDocUrl({ id: doc._id, slug: doc.slug }));
     });
   }
 }
