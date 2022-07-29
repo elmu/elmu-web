@@ -36,7 +36,7 @@ const elmuEnv = {
   ELMU_UPLOAD_LIABILITY_COOKIE_NAME: 'UPLOAD_LIABILITY_ELMU_LOCAL',
   ELMU_EMAIL_SENDER_ADDRESS: 'educandu-test-app@test.com',
   ELMU_SMTP_OPTIONS: 'smtp://127.0.0.1:8025/?ignoreTLS=true',
-  ELMU_INITIAL_USER: JSON.stringify({ username: 'test', password: 'test', email: 'test@test.com' }),
+  ELMU_INITIAL_USER: JSON.stringify({ displayName: 'test', password: 'test', email: 'test@test.com' }),
   ELMU_EXPOSE_ERROR_DETAILS: true.toString(),
   ELMU_ARE_ROOMS_ENABLED: false.toString(),
   ELMU_IMPORT_SOURCES: JSON.stringify([{ name: 'Open Music Academy - integration', hostName: 'integration.openmusic.academy', apiKey: '9e88fd8288ed4738813aaf764df005c4' }]),
