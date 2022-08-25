@@ -80,7 +80,7 @@ function PageHeader({ fullScreen, alerts, onUiLanguageClick }) {
       label: helpPage?.linkTitle,
       icon: <QuestionOutlined />,
       onClick: () => { window.location = helpPage ? routes.getDocUrl({ id: helpPage.documentId }) : ''; },
-      showWhen: !!helpPage
+      showWhen: !!helpPage?.documentId
     },
     {
       key: 'ui-language',
