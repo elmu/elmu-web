@@ -17,22 +17,22 @@ const disabledPlugins = (processEnv.ELMU_DISABLED_PLUGINS || '').split(',').map(
 
 const enabledPlugins = [
   'markdown',
-  'quick-tester',
   'audio',
   'video',
   'image',
-  'pdf-viewer',
-  'iframe',
-  'anavis',
-  'image-tiles',
-  'diagram-net',
+  'catalog',
   'annotation',
+  'table',
+  'pdf-viewer',
+  'diagram-net',
+  'iframe',
   'abc-notation',
+  'quick-tester',
   'ear-training',
   'interval-trainer',
-  'table',
   'interactive-media',
-  'multitrack-media'
+  'multitrack-media',
+  'anavis'
 ].filter(x => !disabledPlugins.includes(x));
 
 const config = {
