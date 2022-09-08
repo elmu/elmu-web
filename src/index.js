@@ -30,6 +30,7 @@ const enabledPlugins = [
   'quick-tester',
   'ear-training',
   'interval-trainer',
+  'media-slideshow',
   'interactive-media',
   'multitrack-media',
   'anavis'
