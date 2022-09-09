@@ -22,5 +22,19 @@
       "passwordResetEmail.text": "Hallo {displayName}!\n\nDu hast das Zurücksetzen deines Kennworts auf ELMU angefordert.\nZur Vergabe eines neuen Kennworts folge bitte diesem Link: {completionLink}\nDer Link bleibt {hours, plural, =1 {eine Stunde} other {# Stunden}} gültig.\n",
       "passwordResetEmail.html": "<p>Hallo {displayName}!<br/><br/>Du hast das Zurücksetzen deines Kennworts auf ELMU angefordert.<br/>Zur Vergabe eines neuen Kennworts folge bitte diesem Link: <a href=\"{completionLink}\">Kennwort ändern</a>.<br/>Der Link bleibt {hours, plural, =1 {eine Stunde} other {# Stunden}} gültig.</p>\n"
     }
+  },
+  {
+    "namespace": "searchBar",
+    "language": "en",
+    "resources": {
+      "searchPlaceholder": "Search terms, e.g. ear training, music theory, analysis, etc."
+    }
+  },
+  {
+    "namespace": "searchBar",
+    "language": "de",
+    "resources": {
+      "searchPlaceholder": "Suchbegriffe, z.B. Gehörbildung, Musiktheorie, Analyse, etc."
+    }
   }
 ]
