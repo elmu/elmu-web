@@ -33,8 +33,7 @@ const enabledPlugins = [
   'media-slideshow',
   'interactive-media',
   'multitrack-media',
-  'media-analysis',
-  'anavis'
+  'media-analysis'
 ].filter(x => !disabledPlugins.includes(x));
 
 const config = {
