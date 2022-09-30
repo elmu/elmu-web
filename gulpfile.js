@@ -41,7 +41,7 @@ const elmuEnv = {
   ELMU_ARE_ROOMS_ENABLED: false.toString(),
   ELMU_IMPORT_SOURCES: JSON.stringify([{ name: 'Open Music Academy - integration', hostName: 'integration.openmusic.academy', apiKey: '9e88fd8288ed4738813aaf764df005c4' }]),
   ELMU_SKIP_MAINTENANCE: false.toString(),
-  ELMU_DISABLED_PLUGINS: 'table,interactive-media,multitrack-media,media-analysis',
+  ELMU_DISABLED_PLUGINS: 'table,interactive-media,multitrack-media,media-analysis,music-xml-viewer',
   ELMU_DISABLED_FEATURES: JSON.stringify(['comments'])
 };
 
